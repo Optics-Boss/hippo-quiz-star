@@ -1,17 +1,14 @@
 #![deny(warnings)]
-use serde::{Deserialize, Serialize};
 use warp::Filter;
 use std::convert::Infallible;
+use std::fs;
 
-#[derive(Deserialize, Serialize)]
-pub struct Quiz {
-    id: u64,
-    title: String,
-}
+mod models;
+use crate::models::models::Quiz;
+use crate::models::models::build_quiz;
 
 #[tokio::main]
 async fn main() {
-    // Match any request and return hello world!
     let welcome = warp::path::end().map(|| "Welcome to Hippo Quiz Master");
 
     let quizes = warp::path!("quizes")
@@ -34,15 +31,19 @@ async fn main() {
 }
 
 pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
-    let quiz = Quiz {
-        id: 1,
-        title: "Test".to_string()
-    };
+    let paths = fs::read_dir("./src/quizes").unwrap();
+    let mut quiz : Quiz = build_quiz("test".to_string()); 
 
-    let quiz2 = Quiz {
-        id: 2,
-        title: "This is Quiz 2".to_string()
-    };
+    for path in paths {
+       quiz = build_quiz(path.unwrap()
+                 .path()
+                 .display()
+                 .to_string()
+                 .strip_prefix("./src/quizes\\")
+                 .unwrap()
+                 .to_string()
+                 );
+    }
 
-   Ok(warp::reply::json(&[quiz, quiz2]))
+    Ok(warp::reply::json(&[quiz]))
 }
