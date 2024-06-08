@@ -15,7 +15,7 @@ pub mod models {
     #[derive(Deserialize, Serialize)]
     pub struct Questions {
         quiz_title: String,
-        question: String,
+        statement: String,
         right_answer: String,
         wrong_answer_1: String,
         wrong_answer_2: String,

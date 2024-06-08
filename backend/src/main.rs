@@ -21,11 +21,14 @@ async fn main() {
         .map(|quiz: String| format!("Quiz number:{}!", quiz));
 
 
+    let cors = warp::cors()
+    .allow_any_origin();
+
    let routes = warp::get().and(
         welcome
         .or(quizes)
         .or(quiz),
-    );
+    ).with(cors);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
 }

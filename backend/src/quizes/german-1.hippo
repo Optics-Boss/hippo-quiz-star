@@ -1,6 +1,7 @@
 <question>
-  <wrong_answer>
-  <wrong_answer>
-  <wrong_answer>
-  <right_answer>
+  <statement>Kaffee</statement>
+  <wrong_answer>Beer</wrong_answer>
+  <wrong_answer>Thea</wrong_answer>
+  <wrong_answer>Milk</wrong_answer>
+  <right_answer>Coffee</right_answer>
 </question>
