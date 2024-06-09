@@ -1,0 +1,46 @@
+:root {
+  --main-color: #989867;
+  --main-second-color: #ADAD85;
+  --secondary-color: #676798;
+  --secondary-second-color: #8585AD;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px; 
+}
+
+.center-text {
+  text-align: center;
+}
+
+.normal__h1 {
+  font-weight: 600;
+  font-size: 2em;
+}
+
+.normal__list {
+  list-style: none;
+  font-weight: 600;
+  font-size: 1.2em;
+  padding: 8px;
+  margin: 8px;
+}
+
+.normal__list-item {
+  padding: 8px;
+  margin: 8px;
+  background-color: var(--secondary-color);
+}
+
+.normal__list-item:hover {
+  background-color: var(--secondary-second-color);
+  cursor: pointer;
+}
+
+.rounded_corners {
+  border-radius: 5px;
+  border: 2px solid var(--secondary-second-color);
+}
+
