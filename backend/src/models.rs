@@ -13,12 +13,27 @@ pub mod models {
     }
 
     #[derive(Deserialize, Serialize)]
-    pub struct Questions {
-        quiz_title: String,
+    pub struct Question {
         statement: String,
         right_answer: String,
         wrong_answer_1: String,
         wrong_answer_2: String,
         wrong_answer_3: String,
+    }
+
+    pub fn build_question (
+          statement: String,
+          right_answer: String,
+          wrong_answer_1: String,
+          wrong_answer_2: String,
+          wrong_answer_3: String,
+        ) -> Question {
+        Question {
+          statement,
+          right_answer,
+          wrong_answer_1,
+          wrong_answer_2,
+          wrong_answer_3,
+        }
     }
 }

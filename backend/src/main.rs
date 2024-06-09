@@ -5,7 +5,9 @@ use std::fs;
 
 mod models;
 use crate::models::models::Quiz;
+// use crate::models::models::Question;
 use crate::models::models::build_quiz;
+use crate::models::models::build_question;
 
 #[tokio::main]
 async fn main() {
@@ -15,11 +17,9 @@ async fn main() {
         .and(warp::get())
         .and_then(list_quizes);
 
-
     let quiz = warp::path("quiz")
         .and(warp::path::param())
-        .map(|quiz: String| format!("Quiz number:{}!", quiz));
-
+        .and_then(|quiz: String| get_quizes(quiz));
 
     let cors = warp::cors()
     .allow_any_origin();
@@ -47,6 +47,21 @@ pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
                  .to_string()
                  );
     }
+
+    Ok(warp::reply::json(&[quiz]))
+}
+
+pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
+    let path : String = "./src/quizes/".to_owned() + &quiz;
+    let file_contents = fs::read_to_string(path).expect("Can't find file");
+
+    let parts = file_contents.split("<question>");
+    for part in parts {
+        println!("{}", part)
+    }
+
+    let quiz : Quiz = build_quiz("test".to_string()); 
+    build_question("test".to_string(), "test".to_string(), "test".to_string(), "test".to_string(), "test".to_string());
 
     Ok(warp::reply::json(&[quiz]))
 }
