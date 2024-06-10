@@ -1,7 +1,7 @@
 <question>
-  <statement>Kaffee<statement>
-  <wrong_answer>Beer<wrong_answer>
-  <wrong_answer>Thea<wrong_answer>
-  <wrong_answer>Milk<wrong_answer>
-  <right_answer>Coffee<right_answer>
-<question>
+  <statement>Kaffee</statement>
+  <wrong_answer_1>Beer</wrong_answer_1>
+  <wrong_answer_2>Thea</wrong_answer_2>
+  <wrong_answer_3>Milk</wrong_answer_3>
+  <right_answer>Coffee</right_answer>
+<\question>

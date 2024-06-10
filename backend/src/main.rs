@@ -54,14 +54,25 @@ pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
 pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
     let path : String = "./src/quizes/".to_owned() + &quiz;
     let file_contents = fs::read_to_string(path).expect("Can't find file");
+    let parts = &file_contents[file_contents.find("<question>").unwrap_or(0)..file_contents.find("</question>").unwrap_or(file_contents.len())];
 
-    let parts = file_contents.split("<question>");
-    for part in parts {
-        println!("{}", part)
-    }
+    let mut questions = Vec::new();
 
-    let quiz : Quiz = build_quiz("test".to_string()); 
-    build_question("test".to_string(), "test".to_string(), "test".to_string(), "test".to_string(), "test".to_string());
+    let statement = &parts[parts.find("<statement>").unwrap()..parts.find("</statement>").unwrap()].strip_prefix("<statement>").unwrap_or("");
+    let wrong_answer_1 = &parts[parts.find("<wrong_answer_1>").unwrap()..parts.find("</wrong_answer_1>").unwrap()].strip_prefix("<wrong_answer_1>").unwrap_or("");
+    let wrong_answer_2 = &parts[parts.find("<wrong_answer_2>").unwrap()..parts.find("</wrong_answer_2>").unwrap()].strip_prefix("<wrong_answer_2>").unwrap_or("");
+    let wrong_answer_3 = &parts[parts.find("<wrong_answer_3>").unwrap()..parts.find("</wrong_answer_3>").unwrap()].strip_prefix("<wrong_answer_3>").unwrap_or("");
+    let right_answer = &parts[parts.find("<right_answer>").unwrap()..parts.find("</right_answer>").unwrap()].strip_prefix("<right_answer>").unwrap_or("");
 
-    Ok(warp::reply::json(&[quiz]))
+    questions.push(
+        build_question(
+            statement.to_string(),
+            wrong_answer_1.to_string(),
+            wrong_answer_2.to_string(),
+            wrong_answer_3.to_string(),
+            right_answer.to_string()
+        )
+    );
+
+    Ok(warp::reply::json(&[questions]))
 }
