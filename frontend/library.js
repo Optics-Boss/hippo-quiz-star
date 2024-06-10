@@ -1,6 +1,5 @@
 let quizes;
 
-
 function getQuizes() {
   this.getJson("http://localhost:3030/quizes")
   .then((quizes) => {
