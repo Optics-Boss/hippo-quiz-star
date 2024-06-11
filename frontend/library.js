@@ -33,4 +33,14 @@ function setElement(elementId, elementText) {
   }
 }
 
+function changeBackgroundOfElement(elementId, color) {
+     const element = document.getElementById(elementId);
+     element.style.background = color;
+}
+
+
+function goToUrl(path) {
+    window.location.assign(path);
+}
+
 this.getQuizes();

@@ -1,4 +1,6 @@
 let questions;
+let rightColor = "#41BE98";
+let wrongColor = "#BE4167";
 
 function getQuestions(quiz) {
   this.getJson("http://localhost:3030/quiz/" + quiz)
@@ -13,6 +15,14 @@ function getQuestions(quiz) {
     this.setElement("list3", this.questions[0][0].wrong_answer_2);
     this.setElement("list4", this.questions[0][0].wrong_answer_3);
   });
+}
+
+function wrongAnswer(elementId) {
+  changeBackgroundOfElement(elementId, wrongColor);
+}
+
+function rightAnswer(elementId) {
+  changeBackgroundOfElement(elementId, rightColor);
 }
 
 this.getQuestions("german-1.hippo");

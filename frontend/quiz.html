@@ -9,13 +9,32 @@
 <body>
   <h1 id="quiz_name" class="center center-text normal__h1">
   </h1>
+
+  <button type="button">Click Me!</button>
+
   <div class="center">
     <h2 id="statement"></h2>
     <ul class="normal__list">
-      <li class="normal__list-item rounded_corners" id="list1"></li>
-      <li class="normal__list-item rounded_corners" id="list2"></li>
-      <li class="normal__list-item rounded_corners" id="list3"></li>
-      <li class="normal__list-item rounded_corners" id="list4"></li>
+      <li 
+        onclick="wrongAnswer('list1')" 
+        class="normal__list-item rounded_corners" 
+        id="list1">
+      </li>
+      <li 
+        onclick="wrongAnswer('list2')" 
+        class="normal__list-item rounded_corners" 
+        id="list2">
+      </li>
+      <li 
+        onclick="wrongAnswer('list3')" 
+        class="normal__list-item rounded_corners" 
+        id="list3">
+      </li>
+      <li 
+        onclick="rightAnswer('list4')" 
+        class="normal__list-item rounded_corners" 
+        id="list4">
+      </li>
     </ul>
   </div>
 </body>
