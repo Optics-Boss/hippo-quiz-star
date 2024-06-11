@@ -10,7 +10,7 @@ function getQuizes() {
     for (let i = 0; i < this.quizes[0].length; i++) {
       this.appendElement("quiz_list", 
         `<li 
-        onclick="goToUrl('quiz.html')" 
+        onclick="goToQuiz('${this.quizes[0][i].title}')" 
         class="normal__list-item rounded_corners" 
         >
         ${this.quizes[0][i].title}
@@ -68,5 +68,22 @@ function changeBackgroundOfElement(elementId, color) {
 function goToUrl(path) {
     window.location.assign(path);
 }
+
+function saveDataToStorage(key, value) {
+  sessionStorage.setItem(key, value);
+}
+
+function getDataFromStorage(key) {
+  return sessionStorage.getItem(key);
+}
+
+function removeDataFromStorage(key) {
+  sessionStorage.removeItem(key);
+}
+
+function clearStorage() {
+  sessionStorage.clear();
+}
+
 
 this.getQuizes();

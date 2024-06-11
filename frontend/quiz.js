@@ -25,4 +25,4 @@ function rightAnswer(elementId) {
   changeBackgroundOfElement(elementId, rightColor);
 }
 
-this.getQuestions("german-1.hippo");
+this.getQuestions(this.getDataFromStorage("quiz"));
