@@ -5,8 +5,19 @@ function getQuizes() {
   .then((quizes) => {
     this.quizes = quizes;
   }).then(() => {
-    console.table(this.quizes);
-    this.setElement("list1", this.quizes[0].title);
+    console.table(this.quizes[0]);
+
+    for (let i = 0; i < this.quizes[0].length; i++) {
+      this.appendElement("quiz_list", 
+        `<li 
+        onclick="goToUrl('quiz.html')" 
+        class="normal__list-item rounded_corners" 
+        >
+        ${this.quizes[0][i].title}
+        </li>`
+      );
+    }
+
   });
 }
 
@@ -28,6 +39,21 @@ function setElement(elementId, elementText) {
         const element = document.getElementById(elementId);
         if(element) {
           element.innerHTML = elementText;
+        }
+      }
+  }
+}
+
+function appendElement(elementId, elementText) {
+    const element = document.getElementById(elementId);
+
+    if (element){
+      element.innerHTML += elementText;
+    } else {
+      window.onload = () => {
+        const element = document.getElementById(elementId);
+        if(element) {
+          element.innerHTML += elementText;
         }
       }
   }

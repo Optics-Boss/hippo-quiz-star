@@ -5,6 +5,19 @@
   --secondary-second-color: #8585AD;
 }
 
+.button {
+  background-color: var(--main-color);
+  margin: auto;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 8px;
+}
+
+.button:hover {
+  background-color: var(--main-second-color);
+  cursor: pointer;
+}
+
 .center {
   margin: auto;
   width: 50%;

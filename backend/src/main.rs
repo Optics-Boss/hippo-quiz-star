@@ -4,8 +4,6 @@ use std::convert::Infallible;
 use std::fs;
 
 mod models;
-use crate::models::models::Quiz;
-// use crate::models::models::Question;
 use crate::models::models::build_quiz;
 use crate::models::models::build_question;
 
@@ -35,20 +33,20 @@ async fn main() {
 
 pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
     let paths = fs::read_dir("./src/quizes").unwrap();
-    let mut quiz : Quiz = build_quiz("test".to_string()); 
+    let mut quizes = Vec::new();
 
     for path in paths {
-       quiz = build_quiz(path.unwrap()
+       quizes.push(build_quiz(path.unwrap()
                  .path()
                  .display()
                  .to_string()
                  .strip_prefix("./src/quizes\\")
                  .unwrap()
                  .to_string()
-                 );
+                 ));
     }
 
-    Ok(warp::reply::json(&[quiz]))
+    Ok(warp::reply::json(&[quizes]))
 }
 
 pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
