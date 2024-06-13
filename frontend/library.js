@@ -5,8 +5,6 @@ function getQuizes() {
   .then((quizes) => {
     this.quizes = quizes;
   }).then(() => {
-    console.table(this.quizes[0]);
-
     for (let i = 0; i < this.quizes[0].length; i++) {
       this.appendElement("quiz_list", 
         `<li 

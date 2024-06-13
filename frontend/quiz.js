@@ -6,14 +6,41 @@ function getQuestions(quiz) {
   this.getJson("http://localhost:3030/quiz/" + quiz)
   .then((questions) => {
     this.questions = questions;
-    console.table(this.questions[0][0]);
   }).then(() => {
     this.setElement("quiz_name", quiz);
-    this.setElement("statement", this.questions[0][0].statement);
-    this.setElement("list1", this.questions[0][0].right_answer);
-    this.setElement("list2", this.questions[0][0].wrong_answer_1);
-    this.setElement("list3", this.questions[0][0].wrong_answer_2);
-    this.setElement("list4", this.questions[0][0].wrong_answer_3);
+
+    for (let i = 0; i < this.questions[0].length; i++) {
+        this.appendElement("questions_list", 
+          `<h2 id="statement">${this.questions[0][i].statement}</h2>
+            <ul class="normal__list">
+              <li 
+                onclick="wrongAnswer('list1-${i}')" 
+                class="normal__list-item rounded_corners" 
+                id="list1-${i}">
+                ${this.questions[0][i].wrong_answer_1}
+              </li>
+              <li 
+                onclick="wrongAnswer('list2-${i}')" 
+                class="normal__list-item rounded_corners" 
+                id="list2-${i}">
+                ${this.questions[0][i].wrong_answer_2}
+              </li>
+              <li 
+                onclick="wrongAnswer('list3-${i}')" 
+                class="normal__list-item rounded_corners" 
+                id="list3-${i}">
+                ${this.questions[0][i].wrong_answer_3}
+              </li>
+              <li 
+                onclick="rightAnswer('list4-${i}')" 
+                class="normal__list-item rounded_corners" 
+                id="list4-${i}">
+                ${this.questions[0][i].right_answer}
+              </li>
+            </ul>
+      `
+      );
+    }
   });
 }
 
