@@ -10,33 +10,42 @@ function getQuestions(quiz) {
     this.setElement("quiz_name", quiz);
 
     for (let i = 0; i < this.questions[0].length; i++) {
-        this.appendElement("questions_list", 
-          `<h2 id="statement">${this.questions[0][i].statement}</h2>
-            <ul class="normal__list">
-              <li 
+       let questionsArray = [
+              `<li 
                 onclick="wrongAnswer('list1-${i}')" 
                 class="normal__list-item rounded_corners" 
                 id="list1-${i}">
                 ${this.questions[0][i].wrong_answer_1}
-              </li>
-              <li 
+              </li>`,
+              `<li 
                 onclick="wrongAnswer('list2-${i}')" 
                 class="normal__list-item rounded_corners" 
                 id="list2-${i}">
                 ${this.questions[0][i].wrong_answer_2}
-              </li>
-              <li 
+              </li>`,
+              `<li 
                 onclick="wrongAnswer('list3-${i}')" 
                 class="normal__list-item rounded_corners" 
                 id="list3-${i}">
                 ${this.questions[0][i].wrong_answer_3}
-              </li>
-              <li 
+              </li>`,
+              `<li 
                 onclick="rightAnswer('list4-${i}')" 
                 class="normal__list-item rounded_corners" 
                 id="list4-${i}">
                 ${this.questions[0][i].right_answer}
-              </li>
+              </li>`
+        ];
+      
+        let shuffledQuestionsArray = this.shuffleArray(questionsArray);
+
+        this.appendElement("questions_list", 
+          `<h2 id="statement">${this.questions[0][i].statement}</h2>
+            <ul class="normal__list">
+              ${shuffledQuestionsArray[0]}
+              ${shuffledQuestionsArray[1]}
+              ${shuffledQuestionsArray[2]}
+              ${shuffledQuestionsArray[3]}
             </ul>
       `
       );

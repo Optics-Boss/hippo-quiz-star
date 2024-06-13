@@ -83,5 +83,10 @@ function clearStorage() {
   sessionStorage.clear();
 }
 
+function shuffleArray(list) {
+  return list.map(value => ({value, sort: Math.random()}))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ value }) => value)
+}
 
 this.getQuizes();
