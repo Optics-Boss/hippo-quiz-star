@@ -1,7 +1,7 @@
 pub mod models {
     use serde::{Deserialize, Serialize};
 
-    #[derive(Deserialize, Serialize)]
+    #[derive(Deserialize, Serialize, Debug)]
     pub struct Quiz {
        pub title: String,
     }
@@ -12,7 +12,7 @@ pub mod models {
         }
     }
 
-    #[derive(Deserialize, Serialize)]
+    #[derive(Deserialize, Serialize, Debug)]
     pub struct Question {
         statement: String,
         right_answer: String,

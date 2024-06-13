@@ -4,4 +4,11 @@
   <wrong_answer_2>Test 2</wrong_answer_2>
   <wrong_answer_3>Test 3</wrong_answer_3>
   <right_answer>Test 4</right_answer>
-<\question>
+<question>
+<question>
+  <statement>Test 2 Statement</statement>
+  <wrong_answer_1>Test 3</wrong_answer_1>
+  <wrong_answer_2>Test 4</wrong_answer_2>
+  <wrong_answer_3>Test 5</wrong_answer_3>
+  <right_answer>Test 6</right_answer>
+<question>

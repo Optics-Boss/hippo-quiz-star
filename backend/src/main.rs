@@ -52,25 +52,30 @@ pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
 pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
     let path : String = "./src/quizes/".to_owned() + &quiz;
     let file_contents = fs::read_to_string(path).expect("Can't find file");
-    let parts = &file_contents[file_contents.find("<question>").unwrap_or(0)..file_contents.find("</question>").unwrap_or(file_contents.len())];
+    let parts: Vec<&str> = file_contents.split("<question>").filter(|&question| !question.is_empty()).collect();
 
     let mut questions = Vec::new();
+    for part in parts {
+        if !part.replace("\r\n", "").is_empty() {
+            let statement = &part[part.find("<statement>").unwrap_or(0)..part.find("</statement>").unwrap_or(0)].strip_prefix("<statement>").unwrap_or("");
+            let wrong_answer_1 = &part[part.find("<wrong_answer_1>").unwrap_or(0)..part.find("</wrong_answer_1>").unwrap_or(0)].strip_prefix("<wrong_answer_1>").unwrap_or("");
+            let wrong_answer_2 = &part[part.find("<wrong_answer_2>").unwrap_or(0)..part.find("</wrong_answer_2>").unwrap_or(0)].strip_prefix("<wrong_answer_2>").unwrap_or("");
+            let wrong_answer_3 = &part[part.find("<wrong_answer_3>").unwrap_or(0)..part.find("</wrong_answer_3>").unwrap_or(0)].strip_prefix("<wrong_answer_3>").unwrap_or("");
+            let right_answer = &part[part.find("<right_answer>").unwrap_or(0)..part.find("</right_answer>").unwrap_or(0)].strip_prefix("<right_answer>").unwrap_or("");
 
-    let statement = &parts[parts.find("<statement>").unwrap()..parts.find("</statement>").unwrap()].strip_prefix("<statement>").unwrap_or("");
-    let wrong_answer_1 = &parts[parts.find("<wrong_answer_1>").unwrap()..parts.find("</wrong_answer_1>").unwrap()].strip_prefix("<wrong_answer_1>").unwrap_or("");
-    let wrong_answer_2 = &parts[parts.find("<wrong_answer_2>").unwrap()..parts.find("</wrong_answer_2>").unwrap()].strip_prefix("<wrong_answer_2>").unwrap_or("");
-    let wrong_answer_3 = &parts[parts.find("<wrong_answer_3>").unwrap()..parts.find("</wrong_answer_3>").unwrap()].strip_prefix("<wrong_answer_3>").unwrap_or("");
-    let right_answer = &parts[parts.find("<right_answer>").unwrap()..parts.find("</right_answer>").unwrap()].strip_prefix("<right_answer>").unwrap_or("");
+            questions.push(
+                build_question(
+                    statement.to_string(),
+                    wrong_answer_1.to_string(),
+                    wrong_answer_2.to_string(),
+                    wrong_answer_3.to_string(),
+                    right_answer.to_string()
+                )
+            );
+        }
+    }
 
-    questions.push(
-        build_question(
-            statement.to_string(),
-            wrong_answer_1.to_string(),
-            wrong_answer_2.to_string(),
-            wrong_answer_3.to_string(),
-            right_answer.to_string()
-        )
-    );
+    println!("{:?}", questions);
 
     Ok(warp::reply::json(&[questions]))
 }
