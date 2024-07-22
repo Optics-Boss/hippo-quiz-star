@@ -41,7 +41,7 @@ function getQuestions(quiz) {
 
         this.appendElement("questions_list", 
           `<h2 id="statement">${this.questions[0][i].statement}</h2>
-            <img src="${this.questions[0][i].image}" alt="${this.questions[0][i].statement}">
+            <img class="normal__image" src="http://localhost:3030/static/${this.questions[0][i].image}" alt="${this.questions[0][i].statement}">
             <ul class="normal__list">
               ${shuffledQuestionsArray[0]}
               ${shuffledQuestionsArray[1]}
