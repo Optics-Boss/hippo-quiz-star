@@ -14,6 +14,7 @@ pub mod models {
 
     #[derive(Deserialize, Serialize, Debug)]
     pub struct Question {
+        image: String,
         statement: String,
         right_answer: String,
         wrong_answer_1: String,
@@ -22,6 +23,7 @@ pub mod models {
     }
 
     pub fn build_question (
+          image: String,
           statement: String,
           right_answer: String,
           wrong_answer_1: String,
@@ -29,6 +31,7 @@ pub mod models {
           wrong_answer_3: String,
         ) -> Question {
         Question {
+          image,
           statement,
           right_answer,
           wrong_answer_1,

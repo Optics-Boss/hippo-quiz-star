@@ -19,13 +19,17 @@ async fn main() {
         .and(warp::path::param())
         .and_then(|quiz: String| get_quizes(quiz));
 
+    let static_files = warp::path("static")
+        .and(warp::fs::dir("www/static"));
+
     let cors = warp::cors()
     .allow_any_origin();
 
    let routes = warp::get().and(
         welcome
         .or(quizes)
-        .or(quiz),
+        .or(quiz)
+        .or(static_files),
     ).with(cors);
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
@@ -49,6 +53,10 @@ pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
     Ok(warp::reply::json(&[quizes]))
 }
 
+pub async fn get_image(image: String) -> String {
+    format!("./quizes/images/{}", image)
+}
+
 pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
     let path : String = "./src/quizes/".to_owned() + &quiz;
     let file_contents = fs::read_to_string(path).expect("Can't find file");
@@ -57,6 +65,7 @@ pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
     let mut questions = Vec::new();
     for part in parts {
         if !part.replace("\r\n", "").is_empty() {
+            let image = &part[part.find("<image>").unwrap_or(0)..part.find("</image>").unwrap_or(0)].strip_prefix("<image>").unwrap_or("");
             let statement = &part[part.find("<statement>").unwrap_or(0)..part.find("</statement>").unwrap_or(0)].strip_prefix("<statement>").unwrap_or("");
             let wrong_answer_1 = &part[part.find("<wrong_answer_1>").unwrap_or(0)..part.find("</wrong_answer_1>").unwrap_or(0)].strip_prefix("<wrong_answer_1>").unwrap_or("");
             let wrong_answer_2 = &part[part.find("<wrong_answer_2>").unwrap_or(0)..part.find("</wrong_answer_2>").unwrap_or(0)].strip_prefix("<wrong_answer_2>").unwrap_or("");
@@ -65,6 +74,7 @@ pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
 
             questions.push(
                 build_question(
+                    image.to_string(),
                     statement.to_string(),
                     wrong_answer_1.to_string(),
                     wrong_answer_2.to_string(),
