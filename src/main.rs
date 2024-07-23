@@ -1,5 +1,5 @@
 #![deny(warnings)]
-use warp::Filter;
+use warp::{http::Uri, Filter};
 use std::convert::Infallible;
 use std::fs;
 
@@ -9,7 +9,8 @@ use crate::models::models::build_question;
 
 #[tokio::main]
 async fn main() {
-    let welcome = warp::path::end().map(|| "Welcome to Hippo Quiz Master");
+    let welcome = warp::path::end()
+        .map(|| warp::redirect(Uri::from_static("static")));
 
     let quizes = warp::path!("quizes")
         .and(warp::get())
@@ -51,10 +52,6 @@ pub async fn list_quizes() -> Result<impl warp::Reply, Infallible> {
     }
 
     Ok(warp::reply::json(&[quizes]))
-}
-
-pub async fn get_image(image: String) -> String {
-    format!("./quizes/images/{}", image)
 }
 
 pub async fn get_quizes(quiz: String) -> Result<impl warp::Reply, Infallible> {
