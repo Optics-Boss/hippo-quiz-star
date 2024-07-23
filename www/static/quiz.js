@@ -1,4 +1,5 @@
 let questions;
+let correctAmount = 0;
 let rightColor = "#41BE98";
 let wrongColor = "#BE4167";
 
@@ -8,6 +9,8 @@ function getQuestions(quiz) {
     this.questions = questions;
   }).then(() => {
     this.setElement("quiz_name", quiz);
+    this.setElement("correct_amount", 0);
+    this.setTotalAmountOfQuestions();
 
     for (let i = 0; i < this.questions[0].length; i++) {
        let questionsArray = [
@@ -62,6 +65,17 @@ function wrongAnswer(elementId) {
 
 function rightAnswer(elementId) {
   changeBackgroundOfElement(elementId, rightColor);
+  this.setCorrectAmountOfQuestions();
+}
+
+
+function setCorrectAmountOfQuestions() {
+  correctAmount++;
+  this.setElement("correct_amount", correctAmount);
+}
+
+function setTotalAmountOfQuestions() {
+  this.setElement("total_amount", this.questions[0].length);
 }
 
 this.getQuestions(this.getDataFromStorage("quiz"));

@@ -85,3 +85,15 @@
 .text__secondary-color {
   color: var(--secondary-color);
 }
+
+.text__bold {
+  font-weight: 700;
+}
+
+.align__left {
+  float: left;
+}
+
+.align__right {
+  float: right;
+}
