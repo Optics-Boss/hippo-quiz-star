@@ -52,6 +52,10 @@
   cursor: pointer;
 }
 
+.half__image {
+  width: 50%;
+}
+
 .normal__image {
   width: 100%;
 }
@@ -59,5 +63,9 @@
 .rounded_corners {
   border-radius: 5px;
   border: 2px solid var(--secondary-second-color);
+}
+
+.align__text__center {
+  text-align: center;
 }
 
