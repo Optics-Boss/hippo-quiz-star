@@ -69,3 +69,19 @@
   text-align: center;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
+.coloured__header {
+  font-size: 2.8em;
+  color: var(--main-color);
+}
+
+.text__main-color {
+  color: var(--main-color);
+}
+
+.text__secondary-color {
+  color: var(--secondary-color);
+}
